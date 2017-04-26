@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="css/basics.css" media="screen" title="no title" charset="utf-8">
 </head>
 <body>
-	<a href="/php-pdo/read.php">Liste des données</a>
+	<a href="/read.php">Liste des données</a>
 	<h1>Ajouter</h1>
 	<form action="" method="post">
 		<div>
@@ -39,5 +39,25 @@
 		</div>
 		<button type="submit" name="button">Envoyer</button>
 	</form>
+	<?php 
+	require_once dirname(__FILE__).'/vendor/autoload.php';
+	ORM::configure('mysql:host=localhost;dbname=reunion_island;charset=utf8');
+	ORM::configure('username', 'root');
+	ORM::configure('password', 'root');
+	if(isset($_POST['submit'])) 
+	{
+
+		$rando = ORM::for_table('hiking')->create();
+
+		$rando->name = $_POST['name'];
+		$rando->difficulty = $_POST['difficulty'];
+		$rando->distance = $_POST['distance'];
+		$rando->duration = $_POST['duration'];
+		$rando->height_difference = $_POST['height_difference'];
+
+		$rando->save();
+	}
+	
+	?>
 </body>
 </html>
